@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAYFLOW — Personal Command Center</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="dark-theme">
+  <!-- 1. Initial Landing / Welcome Showcase -->
+  <section id="landing-view" class="landing-view">
+    <header class="landing-navbar">
+      <div class="auth-brand">
+        <span class="logo-mark">D</span>
+        <div>
+          <h2>DAYFLOW</h2>
+          <p class="muted-small">Personal Command Center</p>
+        </div>
+      </div>
+
+      <div class="landing-nav-actions">
+        <button id="landing-theme-btn" type="button" class="theme-btn">Light Mode</button>
+        <button type="button" id="open-login-btn" class="btn-ghost landing-secondary-btn">Sign In</button>
+        <button type="button" id="open-register-btn" class="btn-primary">Get Started</button>
+      </div>
+    </header>
+
+    <div class="landing-container">
+      <!-- Hero Split Section -->
+      <div class="landing-hero-grid">
+        <div class="landing-hero-copy">
+          <span class="tag-chip landing-pill">ALL-IN-ONE PRODUCTIVITY OS</span>
+          <h1 class="landing-title">Plan your day, protect your focus, build lasting flow.</h1>
+          <p class="landing-desc">
+            DAYFLOW brings your tasks, weekly routine blocks, Pomodoro focus timer, daily notepad, and habit streaks into one fast, distraction-free command center backed by C++ &amp; SQLite.
+          </p>
+
+          <div class="landing-actions">
+            <button type="button" id="hero-register-btn" class="btn-primary">Create Free Account</button>
+            <button type="button" id="hero-login-btn" class="btn-ghost landing-secondary-btn">Sign In to Workspace →</button>
+          </div>
+
+          <div class="landing-metrics-row">
+            <div><strong>6 Modules</strong><span>Unified in one view</span></div>
+            <div><strong>Real-Time</strong><span>Live Flow Score engine</span></div>
+            <div><strong>Multi-User</strong><span>Private SQLite workspace</span></div>
+          </div>
+        </div>
+
+        <!-- Live Interactive Preview Mockup -->
+        <div class="landing-preview-card card">
+          <div class="card-head">
+            <span class="card-label">Live Workspace Preview</span>
+            <span class="badge priority-medium">FLOW SCORE 86/100</span>
+          </div>
+
+          <div class="preview-bento">
+            <div class="preview-stat">
+              <span class="muted-small">Today's Focus</span>
+              <strong>2h 15m</strong>
+              <div class="segment-bars">
+                <span class="lit"></span><span class="lit"></span><span class="lit"></span><span class="lit"></span><span></span>
+              </div>
+            </div>
+
+            <div class="preview-stat">
+              <span class="muted-small">Tasks Done</span>
+              <strong>7 / 8</strong>
+              <span class="muted-small" style="color: var(--accent);">88% completion rate</span>
+            </div>
+          </div>
+
+          <div class="preview-schedule">
+            <div class="preview-ev cat-focus">
+              <span>09:00 - 10:30</span>
+              <strong>Deep Work · System Architecture</strong>
+            </div>
+            <div class="preview-ev cat-routine">
+              <span>11:00 - 12:00</span>
+              <strong>Algorithm &amp; Code Review</strong>
+            </div>
+            <div class="preview-ev cat-important">
+              <span>16:00 - 17:00</span>
+              <strong>Sprint Milestone Submission</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 Core Features Grid -->
+      <div class="landing-section-head">
+        <h2>Everything you need to run your day</h2>
+        <p class="muted-small">Designed for clarity, speed, and zero clutter</p>
+      </div>
+
+      <div class="landing-features-grid">
+        <article class="card feature-showcase-card">
+          <span class="feature-badge">01 · OVERVIEW</span>
+          <h3>Live Flow Score &amp; Analytics</h3>
+          <p class="muted-small">
+            Automatically calculates your daily momentum from completed tasks, deep focus minutes, and habit check-ins with a 7-day productivity chart.
+          </p>
+        </article>
+
+        <article class="card feature-showcase-card">
+          <span class="feature-badge">02 · TASKS</span>
+          <h3>Priority &amp; Deadline Manager</h3>
+          <p class="muted-small">
+            Organize tasks by Low, Medium, High, or Urgent priority, track overdue deadlines, and launch any task straight into the Focus Timer.
+          </p>
+        </article>
+
+        <article class="card feature-showcase-card">
+          <span class="feature-badge">03 · CALENDAR</span>
+          <h3>Weekly Time-Block Planner</h3>
+          <p class="muted-small">
+            Schedule classes, daily routines, and important events on a clean weekly grid with color-coded layers and mini-calendar navigation.
+          </p>
+        </article>
+
+        <article class="card feature-showcase-card">
+          <span class="feature-badge">04 · FOCUS</span>
+          <h3>Pomodoro Deep Focus Timer</h3>
+          <p class="muted-small">
+            Run 15m, 25m, or 45m focus intervals with a visual progress ring that logs every completed session directly to your daily stats.
+          </p>
+        </article>
+
+        <article class="card feature-showcase-card">
+          <span class="feature-badge">05 · NOTES</span>
+          <h3>Date-Indexed Daily Notepad</h3>
+          <p class="muted-small">
+            Capture thoughts, lecture notes, and daily reflections organized by date so you can revisit any previous day's notes anytime.
+          </p>
+        </article>
+
+        <article class="card feature-showcase-card">
+          <span class="feature-badge">06 · HABITS</span>
+          <h3>Daily Habit Streak Tracker</h3>
+          <p class="muted-small">
+            Build consistency with one-click daily check-ins and rolling 7-day completion counters stored privately per account.
+          </p>
+        </article>
+      </div>
+    </div>
+
+    <footer class="landing-footer">
+      <div class="landing-footer-inner">
+        <span><strong>DAYFLOW</strong> — Personal Command Center</span>
+        <span class="footer-credit">Build w care by <strong>Formula NuLL</strong></span>
+      </div>
+    </footer>
+  </section>
+
+  <!-- 2. Sign In / Sign Up Gate -->
+  <section id="auth-gate" class="auth-gate hidden">
+    <div class="auth-card card">
+      <div class="auth-header-row">
+        <div class="auth-brand">
+          <span class="logo-mark">D</span>
+          <div>
+            <h2>DAYFLOW</h2>
+            <p class="muted-small">Sign in or create an account</p>
+          </div>
+        </div>
+        <button type="button" id="back-to-landing-btn" class="btn-ghost">← Back</button>
+      </div>
+
+      <div class="auth-tabs">
+        <button type="button" id="auth-tab-login" class="auth-tab active">Sign In</button>
+        <button type="button" id="auth-tab-register" class="auth-tab">Create Account</button>
+      </div>
+
+      <div id="auth-error" class="banner hidden"></div>
+
+      <form id="auth-form" class="auth-form">
+        <div id="auth-name-wrap" class="hidden">
+          <label class="muted-small" for="auth-name">Full Name</label>
+          <input id="auth-name" type="text" placeholder="Your name" autocomplete="name" />
+        </div>
+
+        <div>
+          <label class="muted-small" for="auth-email">Email Address</label>
+          <input id="auth-email" type="email" placeholder="you@example.com" autocomplete="email" required />
+        </div>
+
+        <div>
+          <label class="muted-small" for="auth-password">Password</label>
+          <input id="auth-password" type="password" placeholder="At least 6 characters" autocomplete="current-password" required />
+        </div>
+
+        <button type="submit" id="auth-submit-btn" class="btn-primary auth-submit">Sign In</button>
+      </form>
+
+      <div class="auth-divider"><span>or continue with</span></div>
+
+      <div class="oauth-grid">
+        <button type="button" id="btn-google-auth" class="oauth-btn">
+          <strong>Gmail / Google</strong>
+          <span class="muted-small">Sign in with Gmail</span>
+        </button>
+
+        <button type="button" id="btn-github-auth" class="oauth-btn">
+          <strong>GitHub</strong>
+          <span class="muted-small">Developer SSO</span>
+        </button>
+
+        <button type="button" id="btn-guest-auth" class="oauth-btn">
+          <strong>Guest Mode</strong>
+          <span class="muted-small">Instant local account</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Main App Shell -->
+  <div id="app-shell" class="app-shell hidden">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="sidebar-logo">
+        <span class="logo-mark">D</span>
+        <span class="logo-text">DAYFLOW</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button type="button" class="nav-btn active" data-view="overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+          </svg>
+          <span>Overview</span>
+        </button>
+
+        <button type="button" class="nav-btn" data-view="tasks">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+          <span>Tasks</span>
+        </button>
+
+        <button type="button" class="nav-btn" data-view="calendar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span>Calendar</span>
+        </button>
+
+        <button type="button" class="nav-btn" data-view="notes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          <span>Notes</span>
+        </button>
+
+        <button type="button" class="nav-btn" data-view="focus">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="9"></circle>
+            <polyline points="12 7 12 12 15 14"></polyline>
+          </svg>
+          <span>Focus</span>
+        </button>
+
+        <button type="button" class="nav-btn" data-view="habits">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20V10"></path>
+            <path d="M18 20V4"></path>
+            <path d="M6 20v-4"></path>
+          </svg>
+          <span>Habits</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="theme-toggle-side" type="button" class="icon-pill" title="Switch Theme">Light</button>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="mobile-brand">DAYFLOW</div>
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input id="search-input" type="search" placeholder="Search tasks..." autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <span id="user-badge" class="date-pill">Account</span>
+          <span id="today-pill" class="date-pill">Today</span>
+          <button id="theme-toggle" type="button" class="theme-btn">Light Mode</button>
+          <button id="logout-btn" type="button" class="btn-ghost del">Log Out</button>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <div id="status-banner" class="banner hidden"></div>
+
+        <section class="welcome-row">
+          <div>
+            <h1 id="greeting-title">Welcome back</h1>
+            <p class="subtitle" id="view-subtitle">Overview · Read-only summary of your day</p>
+          </div>
+          <div class="quick-stats-pills">
+            <span class="mini-pill"><strong id="pill-total">0</strong> Planned</span>
+            <span class="mini-pill accent"><strong id="pill-done">0</strong> Done</span>
+            <span class="mini-pill warn"><strong id="pill-overdue">0</strong> Overdue</span>
+          </div>
+        </section>
+
+        <!-- OVERVIEW TAB -->
+        <div id="tab-overview" class="tab-panel page-enter">
+          <section class="bento-top">
+            <article class="card">
+              <div class="card-head">
+                <span class="card-label">Today's Focus</span>
+                <span id="hero-prio-badge" class="badge priority-medium">NEXT UP</span>
+              </div>
+              <h2 id="hero-task-title" class="hero-task">No active task selected</h2>
+              <div class="hero-time" id="hero-focus-total">0m focused today</div>
+              <p class="muted-small" id="hero-deadline">Use Tasks, Calendar, Notes or Focus tabs</p>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <span class="card-label">Flow Score</span>
+                <span class="status-dot"></span>
+              </div>
+              <div class="big-metric"><span id="flow-score-val">0</span><small>/100</small></div>
+              <div class="trend-line" id="flow-breakdown">Tasks 0% · Focus 0m · Habits 0/0</div>
+              <div class="segment-bars" id="score-segments">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <p class="muted-small">Derived from completed tasks, focus &amp; habits</p>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <span class="card-label">Focus Time</span>
+                <span class="tag-chip">7 Days</span>
+              </div>
+              <div class="big-metric" id="week-focus-val">0m</div>
+              <div class="mini-bar-chart" id="mini-focus-bars"></div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <span class="card-label">Smart Insights</span>
+                <span class="tag-chip">Live</span>
+              </div>
+              <div class="insight-stack" id="insights-list"></div>
+            </article>
+          </section>
+
+          <section class="bento-mid">
+            <article class="card">
+              <div class="card-head">
+                <div>
+                  <h3>Weekly Productivity</h3>
+                  <p class="muted-small">7-day completion &amp; focus momentum</p>
+                </div>
+                <span class="tag-chip">Last 7 days</span>
+              </div>
+              <div class="svg-chart-wrap">
+                <svg id="weekly-chart" viewBox="0 0 560 190" preserveAspectRatio="none"></svg>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <h3>Task Completion</h3>
+                <span class="muted-small" id="gauge-ratio">0/0</span>
+              </div>
+              <div class="arc-gauge-wrap">
+                <svg id="completion-gauge" viewBox="0 0 240 145">
+                  <g id="gauge-ticks"></g>
+                  <text x="120" y="106" text-anchor="middle" class="gauge-percent" id="gauge-percent-text">0%</text>
+                  <text x="120" y="126" text-anchor="middle" class="gauge-sub">COMPLETION RATE</text>
+                </svg>
+              </div>
+              <div class="gauge-footer">
+                <div><strong id="gauge-completed">0</strong><span>Completed</span></div>
+                <div><strong id="gauge-pending">0</strong><span>Pending</span></div>
+                <div><strong id="gauge-overdue" class="warn-text">0</strong><span>Overdue</span></div>
+              </div>
+            </article>
+          </section>
+
+          <section class="card">
+            <div class="card-head">
+              <div>
+                <h3>Today's Task Snapshot</h3>
+                <p class="muted-small">Read-only preview — switch to Tasks tab to manage items</p>
+              </div>
+              <button type="button" class="btn-ghost" data-jump="tasks">Open Tasks →</button>
+            </div>
+            <ul id="overview-task-preview" class="readonly-list"></ul>
+          </section>
+        </div>
+
+        <!-- TASKS TAB -->
+        <div id="tab-tasks" class="tab-panel page-enter hidden">
+          <section class="card">
+            <div class="panel-header">
+              <div>
+                <h3>Tasks &amp; Priorities</h3>
+                <p class="muted-small">Add, prioritize, filter, complete, or remove tasks</p>
+              </div>
+              <div class="filter-bar" role="group" aria-label="Task filters">
+                <button type="button" class="filter-btn active" data-filter="all">All</button>
+                <button type="button" class="filter-btn" data-filter="active">Active</button>
+                <button type="button" class="filter-btn" data-filter="overdue">Overdue</button>
+                <button type="button" class="filter-btn" data-filter="completed">Completed</button>
+              </div>
+            </div>
+
+            <form id="task-form" class="task-form">
+              <input type="text" id="task-input" placeholder="Add a new task..." autocomplete="off" required />
+              <select id="task-priority" aria-label="Priority">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+                <option value="urgent">Urgent</option>
+              </select>
+              <input type="date" id="task-due" aria-label="Due date" />
+              <button type="submit" class="btn-primary">Add Task</button>
+            </form>
+
+            <ul id="task-list" class="task-list"></ul>
+          </section>
+        </div>
+
+        <!-- CALENDAR TAB -->
+        <div id="tab-calendar" class="tab-panel page-enter hidden">
+          <section class="card gcal-card">
+            <div class="gcal-topbar">
+              <div class="gcal-nav-group">
+                <button type="button" id="cal-today-btn" class="btn-ghost gcal-today-btn">Today</button>
+                <div class="gcal-arrows">
+                  <button type="button" id="cal-prev-week" class="circle-ctrl" title="Previous Week">‹</button>
+                  <button type="button" id="cal-next-week" class="circle-ctrl" title="Next Week">›</button>
+                </div>
+                <h3 id="cal-month-title" class="gcal-month-heading">November 2026</h3>
+              </div>
+              <div class="gcal-right-meta">
+                <span class="tag-chip">Week View · Routine &amp; Important Tasks</span>
+              </div>
+            </div>
+
+            <form id="routine-form" class="gcal-quick-form">
+              <input type="text" id="routine-title" placeholder="Add routine or important task..." autocomplete="off" required />
+              <input type="date" id="routine-date-input" aria-label="Event date" required />
+              <input type="time" id="routine-start" value="09:00" aria-label="Start time" required />
+              <input type="time" id="routine-end" value="10:30" aria-label="End time" required />
+              <select id="routine-category" aria-label="Category">
+                <option value="focus">Focused Work</option>
+                <option value="routine">Routine</option>
+                <option value="meeting">Class / Sync</option>
+                <option value="important">Important</option>
+              </select>
+              <label class="check-inline">
+                <input type="checkbox" id="routine-important" />
+                <span>Important</span>
+              </label>
+              <button type="submit" class="btn-primary">+ Create</button>
+            </form>
+
+            <div class="gcal-body">
+              <aside class="gcal-left-rail">
+                <div class="mini-cal-box">
+                  <div class="mini-cal-head">
+                    <span id="mini-cal-label">Nov 2026</span>
+                    <div class="mini-cal-btns">
+                      <button type="button" id="mini-prev-month" class="btn-ghost">‹</button>
+                      <button type="button" id="mini-next-month" class="btn-ghost">›</button>
+                    </div>
+                  </div>
+                  <div class="mini-cal-weekdays">
+                    <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                  </div>
+                  <div id="mini-cal-days" class="mini-cal-days"></div>
+                </div>
+
+                <div class="my-cals-box">
+                  <h4>Routine Layers</h4>
+                  <label class="cal-layer-row">
+                    <input type="checkbox" class="cal-cat-filter" value="focus" checked />
+                    <span class="cal-dot dot-focus"></span>
+                    <span>Focused Work</span>
+                  </label>
+                  <label class="cal-layer-row">
+                    <input type="checkbox" class="cal-cat-filter" value="routine" checked />
+                    <span class="cal-dot dot-routine"></span>
+                    <span>Daily Routine</span>
+                  </label>
+                  <label class="cal-layer-row">
+                    <input type="checkbox" class="cal-cat-filter" value="meeting" checked />
+                    <span class="cal-dot dot-meeting"></span>
+                    <span>Class / Sync</span>
+                  </label>
+                  <label class="cal-layer-row">
+                    <input type="checkbox" class="cal-cat-filter" value="important" checked />
+                    <span class="cal-dot dot-important"></span>
+                    <span>Important</span>
+                  </label>
+                </div>
+
+                <div class="my-cals-box">
+                  <h4>Important Reminders</h4>
+                  <ul id="calendar-important-list" class="gcal-reminders-list"></ul>
+                </div>
+              </aside>
+
+              <div class="gcal-grid-scroller">
+                <div id="gcal-week-header" class="gcal-week-header"></div>
+                <div id="gcal-time-grid" class="gcal-time-grid"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- NOTES TAB -->
+        <div id="tab-notes" class="tab-panel page-enter hidden">
+          <section class="card notes-shell">
+            <div class="notes-history-col">
+              <div class="notes-col-head">
+                <h4>Previous &amp; Saved Days</h4>
+                <button type="button" id="new-today-note-btn" class="btn-ghost">Today</button>
+              </div>
+              <ul id="notes-history-list" class="notes-history-list"></ul>
+            </div>
+
+            <div class="notepad-col">
+              <form id="note-form" class="notepad-form">
+                <div class="notepad-meta-bar">
+                  <input type="date" id="note-date-input" aria-label="Note date" required />
+                  <input type="text" id="note-title-input" placeholder="Note title..." autocomplete="off" />
+                  <button type="submit" class="btn-primary">Save Note</button>
+                </div>
+                <textarea
+                  id="note-content-input"
+                  class="notepad-textarea"
+                  placeholder="Write like a clean notepad... saved per user in SQLite."
+                ></textarea>
+              </form>
+            </div>
+          </section>
+        </div>
+
+        <!-- FOCUS TAB -->
+        <div id="tab-focus" class="tab-panel page-enter hidden">
+          <section class="card focus-tab-card">
+            <div class="card-head">
+              <h3>Deep Focus Timer</h3>
+              <div class="preset-group">
+                <button type="button" class="preset-btn active" data-mins="25">25m</button>
+                <button type="button" class="preset-btn" data-mins="45">45m</button>
+                <button type="button" class="preset-btn" data-mins="15">15m</button>
+              </div>
+            </div>
+
+            <div class="circular-timer">
+              <svg viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="84" class="timer-track"></circle>
+                <circle cx="100" cy="100" r="84" class="timer-ring" id="timer-ring"></circle>
+              </svg>
+              <div class="timer-center">
+                <div id="timer-display" class="timer-digits">25:00</div>
+                <div class="timer-state" id="timer-state-label">FOCUS</div>
+              </div>
+            </div>
+
+            <div class="timer-task-tag" id="timer-active-task">General Focus Session</div>
+
+            <div class="timer-controls">
+              <button type="button" id="timer-reset" class="circle-ctrl" title="Reset">↺</button>
+              <button type="button" id="timer-toggle" class="pill-ctrl">Start</button>
+              <button type="button" id="timer-complete" class="circle-ctrl" title="Save Session Now">✓</button>
+            </div>
+          </section>
+        </div>
+
+        <!-- HABITS TAB -->
+        <div id="tab-habits" class="tab-panel page-enter hidden">
+          <section class="card">
+            <div class="card-head">
+              <div>
+                <h3>Daily Habits</h3>
+                <p class="muted-small">Create, check off, or remove daily routines</p>
+              </div>
+              <span class="tag-chip" id="habits-count-chip">0/0</span>
+            </div>
+
+            <form id="habit-form" class="habit-form">
+              <input type="text" id="habit-input" placeholder="Add a new daily habit..." autocomplete="off" required />
+              <button type="submit" class="btn-primary">Add Habit</button>
+            </form>
+
+            <ul id="habit-list" class="habit-list"></ul>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
+    <button type="button" class="m-nav-btn active" data-view="overview">Overview</button>
+    <button type="button" class="m-nav-btn" data-view="tasks">Tasks</button>
+    <button type="button" class="m-nav-btn" data-view="calendar">Calendar</button>
+    <button type="button" class="m-nav-btn" data-view="notes">Notes</button>
+    <button type="button" class="m-nav-btn" data-view="focus">Focus</button>
+  </nav>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
