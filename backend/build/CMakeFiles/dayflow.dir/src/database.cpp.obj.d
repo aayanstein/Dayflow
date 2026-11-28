@@ -1,6 +1,6 @@
 CMakeFiles/dayflow.dir/src/database.cpp.obj: \
- C:\Users\Ayan\Desktop\DayFlow\backend\src\database.cpp \
- C:/Users/Ayan/Desktop/DayFlow/backend/include/database.h \
+ C:\Users\Ayan\Desktop\Dayflow\backend\src\database.cpp \
+ C:/Users/Ayan/Desktop/Dayflow/backend/include/database.h \
  C:/msys64/ucrt64/include/c++/15.2.0/string \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/requires_hosted.h \
  C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/c++config.h \

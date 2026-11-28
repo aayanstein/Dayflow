@@ -4,9 +4,28 @@
 #include <string>
 #include <mutex>
 #include <ctime>
+#include <fstream>
+#include <sstream>
 #include <iostream>
+#include <curl/curl.h>
+#include <cstdlib>
+#include <random>
+#include <iomanip>
+#include <unordered_map>
+#include <functional>
 
 namespace {
+struct OAuthSession {
+    int user_id = 0;
+    std::string sub;
+    std::string provider;
+    std::string name;
+    std::string email;
+};
+
+std::mutex g_oauth_mtx;
+std::unordered_map<std::string, OAuthSession> g_oauth_sessions;
+
 std::string server_today() {
     std::time_t now = std::time(nullptr);
     std::tm* lt = std::localtime(&now);
@@ -31,7 +50,143 @@ std::string extract_bearer_token(const crow::request& req) {
     }
     return "";
 }
+
+bool read_file_content(const std::string& path, std::string& out) {
+    std::ifstream ifs(path, std::ios::in | std::ios::binary);
+    if (!ifs.is_open()) return false;
+    std::ostringstream ss;
+    ss << ifs.rdbuf();
+    out = ss.str();
+    return true;
 }
+
+crow::response serve_frontend_asset(const std::string& rel_path, const std::string& content_type) {
+    const std::vector<std::string> candidates = {
+        "frontend/" + rel_path,
+        "../frontend/" + rel_path,
+        "../../frontend/" + rel_path
+    };
+
+    for (const auto& candidate : candidates) {
+        std::string body;
+        if (read_file_content(candidate, body)) {
+            crow::response res(200, body);
+            res.set_header("Content-Type", content_type);
+            res.set_header("Cache-Control", "no-store, no-cache, must-revalidate");
+            return res;
+        }
+    }
+
+    return crow::response(404, "Frontend asset not found: " + rel_path);
+}
+
+size_t curl_write_cb(void* contents, size_t size, size_t nmemb, void* userp) {
+    size_t total = size * nmemb;
+    static_cast<std::string*>(userp)->append(static_cast<char*>(contents), total);
+    return total;
+}
+
+std::string url_encode(const std::string& value) {
+    CURL* curl = curl_easy_init();
+    if (!curl) return value;
+    char* out = curl_easy_escape(curl, value.c_str(), static_cast<int>(value.size()));
+    std::string encoded = out ? out : value;
+    if (out) curl_free(out);
+    curl_easy_cleanup(curl);
+    return encoded;
+}
+
+bool http_post_form(const std::string& url,
+                   const std::string& form_body,
+                   std::string& out_response,
+                   long& out_status) {
+    CURL* curl = curl_easy_init();
+    if (!curl) return false;
+
+    struct curl_slist* headers = nullptr;
+    headers = curl_slist_append(headers, "Content-Type: application/x-www-form-urlencoded");
+
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    curl_easy_setopt(curl, CURLOPT_POST, 1L);
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, form_body.c_str());
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curl_write_cb);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &out_response);
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT, 15L);
+
+    CURLcode res = curl_easy_perform(curl);
+    curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &out_status);
+
+    curl_slist_free_all(headers);
+    curl_easy_cleanup(curl);
+    return (res == CURLE_OK);
+}
+
+bool http_get_bearer(const std::string& url,
+                     const std::string& bearer_token,
+                     std::string& out_response,
+                     long& out_status) {
+    CURL* curl = curl_easy_init();
+    if (!curl) return false;
+
+    struct curl_slist* headers = nullptr;
+    headers = curl_slist_append(headers, ("Authorization: Bearer " + bearer_token).c_str());
+
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curl_write_cb);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &out_response);
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT, 15L);
+
+    CURLcode res = curl_easy_perform(curl);
+    curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &out_status);
+
+    curl_slist_free_all(headers);
+    curl_easy_cleanup(curl);
+    return (res == CURLE_OK);
+}
+
+std::string extract_json_string(const std::string& json_str, const std::string& key) {
+    std::string needle = "\"" + key + "\"";
+    size_t pos = json_str.find(needle);
+    if (pos == std::string::npos) return "";
+    pos = json_str.find(':', pos + needle.size());
+    if (pos == std::string::npos) return "";
+    pos = json_str.find('"', pos + 1);
+    if (pos == std::string::npos) return "";
+    size_t end = pos + 1;
+    std::string out;
+    while (end < json_str.size()) {
+        char c = json_str[end];
+        if (c == '\\' && end + 1 < json_str.size()) {
+            out.push_back(json_str[end + 1]);
+            end += 2;
+        } else if (c == '"') {
+            break;
+        } else {
+            out.push_back(c);
+            ++end;
+        }
+    }
+    return out;
+}
+
+std::string generate_session_token() {
+    std::random_device rd;
+    std::mt19937_64 gen(rd());
+    std::ostringstream oss;
+    oss << "df_sess_" << std::hex << std::setfill('0');
+    for (int i = 0; i < 4; ++i) {
+        oss << std::setw(16) << gen();
+    }
+    return oss.str();
+}
+
+std::string get_env_or_empty(const char* name) {
+    const char* val = std::getenv(name);
+    return val ? std::string(val) : std::string();
+}
+} // namespace
 
 struct CORSMiddleware {
     struct context {};
@@ -66,8 +221,34 @@ int main() {
     auto authenticate = [&](const crow::request& req, User& out_user) -> bool {
         std::string token = extract_bearer_token(req);
         if (token.empty()) return false;
-        return db.get_user_by_token(token, out_user);
+        if (db.get_user_by_token(token, out_user)) return true;
+
+        std::lock_guard<std::mutex> lock(g_oauth_mtx);
+        auto it = g_oauth_sessions.find(token);
+        if (it == g_oauth_sessions.end()) return false;
+        out_user.id = it->second.user_id;
+        out_user.name = it->second.name;
+        out_user.email = it->second.email;
+        out_user.provider = it->second.provider;
+        return true;
     };
+
+    // Frontend Routes
+    CROW_ROUTE(app, "/")([]() {
+        return serve_frontend_asset("index.html", "text/html; charset=utf-8");
+    });
+
+    CROW_ROUTE(app, "/index.html")([]() {
+        return serve_frontend_asset("index.html", "text/html; charset=utf-8");
+    });
+
+    CROW_ROUTE(app, "/css/style.css")([]() {
+        return serve_frontend_asset("css/style.css", "text/css; charset=utf-8");
+    });
+
+    CROW_ROUTE(app, "/js/app.js")([]() {
+        return serve_frontend_asset("js/app.js", "application/javascript; charset=utf-8");
+    });
 
     CROW_ROUTE(app, "/api/health")([]() {
         crow::json::wvalue res;
@@ -160,6 +341,100 @@ int main() {
         return crow::response(200, res);
     });
 
+    // Auth: OAuth Code Exchange (PKCE)
+    CROW_ROUTE(app, "/api/auth/oauth/exchange").methods(crow::HTTPMethod::Post)([&](const crow::request& req) {
+        std::lock_guard<std::mutex> lock(mtx);
+        auto body = crow::json::load(req.body);
+        if (!body || !body.has("provider") || !body.has("code")) {
+            return crow::response(400, R"({"error":"missing provider or code"})");
+        }
+
+        std::string provider = (body["provider"].t() == crow::json::type::String) ? std::string(body["provider"].s()) : std::string("");
+        std::string code = (body["code"].t() == crow::json::type::String) ? std::string(body["code"].s()) : std::string("");
+        std::string verifier = (body.has("code_verifier") && body["code_verifier"].t() == crow::json::type::String)
+                                   ? std::string(body["code_verifier"].s())
+                                   : std::string("");
+        std::string redirect_uri = (body.has("redirect_uri") && body["redirect_uri"].t() == crow::json::type::String)
+                                       ? std::string(body["redirect_uri"].s())
+                                       : std::string("");
+
+        if (provider != "google") {
+            return crow::response(400, R"({"error":"unsupported provider"})");
+        }
+
+        std::string client_id = get_env_or_empty("GOOGLE_CLIENT_ID");
+        if (client_id.empty()) {
+            client_id = "406890218377-5g5306c7f1ftgi31a08qh8oliomf0sv0.apps.googleusercontent.com";
+        }
+        std::string client_secret = get_env_or_empty("GOOGLE_CLIENT_SECRET");
+        if (client_secret.empty()) {
+            return crow::response(500, R"({"error":"GOOGLE_CLIENT_SECRET is not set on server"})");
+        }
+
+        std::string post_fields =
+            "client_id=" + url_encode(client_id) +
+            "&client_secret=" + url_encode(client_secret) +
+            "&code=" + url_encode(code) +
+            "&code_verifier=" + url_encode(verifier) +
+            "&redirect_uri=" + url_encode(redirect_uri) +
+            "&grant_type=authorization_code";
+
+        std::string token_resp;
+        long token_status = 0;
+        if (!http_post_form("https://oauth2.googleapis.com/token", post_fields, token_resp, token_status)) {
+            return crow::response(502, R"({"error":"failed to contact Google token endpoint"})");
+        }
+        if (token_status < 200 || token_status >= 300) {
+            crow::json::wvalue err_res;
+            err_res["error"] = "Google token exchange failed";
+            err_res["details"] = token_resp;
+            return crow::response(400, err_res);
+        }
+
+        std::string access_token = extract_json_string(token_resp, "access_token");
+        if (access_token.empty()) {
+            return crow::response(400, R"({"error":"no access_token returned by Google"})");
+        }
+
+        std::string userinfo_resp;
+        long userinfo_status = 0;
+        if (!http_get_bearer("https://openidconnect.googleapis.com/v1/userinfo", access_token, userinfo_resp, userinfo_status)) {
+            return crow::response(502, R"({"error":"failed to fetch Google userinfo"})");
+        }
+        if (userinfo_status < 200 || userinfo_status >= 300) {
+            return crow::response(400, R"({"error":"Google userinfo request rejected"})");
+        }
+
+        std::string sub = extract_json_string(userinfo_resp, "sub");
+        std::string name = extract_json_string(userinfo_resp, "name");
+        std::string email = extract_json_string(userinfo_resp, "email");
+        if (sub.empty()) {
+            return crow::response(400, R"({"error":"missing Google user sub"})");
+        }
+        if (name.empty()) name = email.empty() ? "Google User" : email;
+
+        std::hash<std::string> hasher;
+        int user_id = 100000000 + static_cast<int>(hasher(sub) % 800000000);
+        std::string session_token = generate_session_token();
+
+        {
+            std::lock_guard<std::mutex> oauth_lock(g_oauth_mtx);
+            g_oauth_sessions[session_token] = OAuthSession{user_id, sub, provider, name, email};
+        }
+
+        crow::json::wvalue user_json;
+        user_json["id"] = user_id;
+        user_json["oauth_sub"] = "google_" + sub;
+        user_json["provider"] = provider;
+        user_json["name"] = name;
+        user_json["email"] = email;
+
+        crow::json::wvalue res;
+        res["token"] = session_token;
+        res["user"] = std::move(user_json);
+        return crow::response(200, res);
+    });
+
     // Auth: Current User
     CROW_ROUTE(app, "/api/auth/me").methods(crow::HTTPMethod::Get)([&](const crow::request& req) {
         std::lock_guard<std::mutex> lock(mtx);
@@ -180,6 +455,10 @@ int main() {
         std::string token = extract_bearer_token(req);
         std::lock_guard<std::mutex> lock(mtx);
         db.delete_session(token);
+        {
+            std::lock_guard<std::mutex> oauth_lock(g_oauth_mtx);
+            g_oauth_sessions.erase(token);
+        }
         return crow::response(200, R"({"logged_out":true})");
     });
 
@@ -450,42 +729,6 @@ int main() {
         return crow::response(200, res);
     });
 
-    CROW_ROUTE(app, "/api/habits/<int>").methods(crow::HTTPMethod::Delete)([&](const crow::request& req, int id) {
-        std::lock_guard<std::mutex> lock(mtx);
-        User user;
-        if (!authenticate(req, user)) return crow::response(401, R"({"error":"unauthorized"})");
-
-        if (!db.delete_habit(user.id, id)) {
-            return crow::response(404, R"({"error":"habit not found"})");
-        }
-        return crow::response(200, R"({"deleted":true})");
-    });
-
-    CROW_ROUTE(app, "/api/notes").methods(crow::HTTPMethod::Post)([&](const crow::request& req) {
-        std::lock_guard<std::mutex> lock(mtx);
-        User user;
-        if (!authenticate(req, user)) return crow::response(401, R"({"error":"unauthorized"})");
-
-        auto body = crow::json::load(req.body);
-        if (!body) return crow::response(400, R"({"error":"invalid JSON"})");
-
-        std::string note_date = (body.has("note_date") && body["note_date"].t() == crow::json::type::String) ? std::string(body["note_date"].s()) : server_today();
-        std::string title = (body.has("title") && body["title"].t() == crow::json::type::String) ? std::string(body["title"].s()) : "";
-        std::string content = (body.has("content") && body["content"].t() == crow::json::type::String) ? std::string(body["content"].s()) : "";
-
-        NoteEntry saved;
-        if (!db.save_note(user.id, note_date, title, content, saved)) {
-            return crow::response(500, R"({"error":"failed to save note"})");
-        }
-
-        crow::json::wvalue res;
-        res["id"] = saved.id;
-        res["note_date"] = saved.note_date;
-        res["title"] = saved.title;
-        res["content"] = saved.content;
-        return crow::response(200, res);
-    });
-
     CROW_ROUTE(app, "/api/notes/<int>").methods(crow::HTTPMethod::Delete)([&](const crow::request& req, int id) {
         std::lock_guard<std::mutex> lock(mtx);
         User user;
@@ -559,4 +802,5 @@ int main() {
     });
 
     app.port(18080).multithreaded().run();
+    return 0;
 }

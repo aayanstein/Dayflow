@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/Ayan/Desktop/DayFlow/backend/src/database.cpp" "CMakeFiles/dayflow.dir/src/database.cpp.obj" "gcc" "CMakeFiles/dayflow.dir/src/database.cpp.obj.d"
-  "C:/Users/Ayan/Desktop/DayFlow/backend/src/main.cpp" "CMakeFiles/dayflow.dir/src/main.cpp.obj" "gcc" "CMakeFiles/dayflow.dir/src/main.cpp.obj.d"
+  "C:/Users/Ayan/Desktop/Dayflow/backend/src/database.cpp" "CMakeFiles/dayflow.dir/src/database.cpp.obj" "gcc" "CMakeFiles/dayflow.dir/src/database.cpp.obj.d"
+  "C:/Users/Ayan/Desktop/Dayflow/backend/src/main.cpp" "CMakeFiles/dayflow.dir/src/main.cpp.obj" "gcc" "CMakeFiles/dayflow.dir/src/main.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

@@ -52,7 +52,7 @@ RM = C:\msys64\ucrt64\bin\cmake.exe -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Ayan\Desktop\DayFlow\backend
+CMAKE_SOURCE_DIR = C:\Users\Ayan\Desktop\Dayflow\backend
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = C:\Users\Ayan\Desktop\DayFlow\backend\build
@@ -73,33 +73,33 @@ CMakeFiles/dayflow.dir/codegen:
 
 CMakeFiles/dayflow.dir/src/main.cpp.obj: CMakeFiles/dayflow.dir/flags.make
 CMakeFiles/dayflow.dir/src/main.cpp.obj: CMakeFiles/dayflow.dir/includes_CXX.rsp
-CMakeFiles/dayflow.dir/src/main.cpp.obj: C:/Users/Ayan/Desktop/DayFlow/backend/src/main.cpp
+CMakeFiles/dayflow.dir/src/main.cpp.obj: C:/Users/Ayan/Desktop/Dayflow/backend/src/main.cpp
 CMakeFiles/dayflow.dir/src/main.cpp.obj: CMakeFiles/dayflow.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Ayan\Desktop\DayFlow\backend\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/dayflow.dir/src/main.cpp.obj"
-	C:\msys64\ucrt64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dayflow.dir/src/main.cpp.obj -MF CMakeFiles\dayflow.dir\src\main.cpp.obj.d -o CMakeFiles\dayflow.dir\src\main.cpp.obj -c C:\Users\Ayan\Desktop\DayFlow\backend\src\main.cpp
+	C:\msys64\ucrt64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dayflow.dir/src/main.cpp.obj -MF CMakeFiles\dayflow.dir\src\main.cpp.obj.d -o CMakeFiles\dayflow.dir\src\main.cpp.obj -c C:\Users\Ayan\Desktop\Dayflow\backend\src\main.cpp
 
 CMakeFiles/dayflow.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dayflow.dir/src/main.cpp.i"
-	C:\msys64\ucrt64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Ayan\Desktop\DayFlow\backend\src\main.cpp > CMakeFiles\dayflow.dir\src\main.cpp.i
+	C:\msys64\ucrt64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Ayan\Desktop\Dayflow\backend\src\main.cpp > CMakeFiles\dayflow.dir\src\main.cpp.i
 
 CMakeFiles/dayflow.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dayflow.dir/src/main.cpp.s"
-	C:\msys64\ucrt64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Ayan\Desktop\DayFlow\backend\src\main.cpp -o CMakeFiles\dayflow.dir\src\main.cpp.s
+	C:\msys64\ucrt64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Ayan\Desktop\Dayflow\backend\src\main.cpp -o CMakeFiles\dayflow.dir\src\main.cpp.s
 
 CMakeFiles/dayflow.dir/src/database.cpp.obj: CMakeFiles/dayflow.dir/flags.make
 CMakeFiles/dayflow.dir/src/database.cpp.obj: CMakeFiles/dayflow.dir/includes_CXX.rsp
-CMakeFiles/dayflow.dir/src/database.cpp.obj: C:/Users/Ayan/Desktop/DayFlow/backend/src/database.cpp
+CMakeFiles/dayflow.dir/src/database.cpp.obj: C:/Users/Ayan/Desktop/Dayflow/backend/src/database.cpp
 CMakeFiles/dayflow.dir/src/database.cpp.obj: CMakeFiles/dayflow.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Ayan\Desktop\DayFlow\backend\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/dayflow.dir/src/database.cpp.obj"
-	C:\msys64\ucrt64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dayflow.dir/src/database.cpp.obj -MF CMakeFiles\dayflow.dir\src\database.cpp.obj.d -o CMakeFiles\dayflow.dir\src\database.cpp.obj -c C:\Users\Ayan\Desktop\DayFlow\backend\src\database.cpp
+	C:\msys64\ucrt64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dayflow.dir/src/database.cpp.obj -MF CMakeFiles\dayflow.dir\src\database.cpp.obj.d -o CMakeFiles\dayflow.dir\src\database.cpp.obj -c C:\Users\Ayan\Desktop\Dayflow\backend\src\database.cpp
 
 CMakeFiles/dayflow.dir/src/database.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dayflow.dir/src/database.cpp.i"
-	C:\msys64\ucrt64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Ayan\Desktop\DayFlow\backend\src\database.cpp > CMakeFiles\dayflow.dir\src\database.cpp.i
+	C:\msys64\ucrt64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Ayan\Desktop\Dayflow\backend\src\database.cpp > CMakeFiles\dayflow.dir\src\database.cpp.i
 
 CMakeFiles/dayflow.dir/src/database.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dayflow.dir/src/database.cpp.s"
-	C:\msys64\ucrt64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Ayan\Desktop\DayFlow\backend\src\database.cpp -o CMakeFiles\dayflow.dir\src\database.cpp.s
+	C:\msys64\ucrt64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Ayan\Desktop\Dayflow\backend\src\database.cpp -o CMakeFiles\dayflow.dir\src\database.cpp.s
 
 # Object files for target dayflow
 dayflow_OBJECTS = \
@@ -127,6 +127,6 @@ CMakeFiles/dayflow.dir/clean:
 .PHONY : CMakeFiles/dayflow.dir/clean
 
 CMakeFiles/dayflow.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Ayan\Desktop\DayFlow\backend C:\Users\Ayan\Desktop\DayFlow\backend C:\Users\Ayan\Desktop\DayFlow\backend\build C:\Users\Ayan\Desktop\DayFlow\backend\build C:\Users\Ayan\Desktop\DayFlow\backend\build\CMakeFiles\dayflow.dir\DependInfo.cmake "--color=$(COLOR)" dayflow
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Ayan\Desktop\Dayflow\backend C:\Users\Ayan\Desktop\Dayflow\backend C:\Users\Ayan\Desktop\DayFlow\backend\build C:\Users\Ayan\Desktop\DayFlow\backend\build C:\Users\Ayan\Desktop\DayFlow\backend\build\CMakeFiles\dayflow.dir\DependInfo.cmake "--color=$(COLOR)" dayflow
 .PHONY : CMakeFiles/dayflow.dir/depend
 

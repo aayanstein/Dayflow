@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Ayan/Desktop/DayFlow/backend
+# Install script for directory: C:/Users/Ayan/Desktop/Dayflow/backend
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
