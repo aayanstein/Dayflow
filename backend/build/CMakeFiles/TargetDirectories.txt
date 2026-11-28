@@ -1,3 +1,0 @@
-C:/Users/Ayan/Desktop/DayFlow/backend/build/CMakeFiles/dayflow.dir
-C:/Users/Ayan/Desktop/DayFlow/backend/build/CMakeFiles/edit_cache.dir
-C:/Users/Ayan/Desktop/DayFlow/backend/build/CMakeFiles/rebuild_cache.dir

@@ -1,18 +1,5 @@
-# Build & binaries
 backend/build/
-*.exe
-*.o
-*.obj
-*.dll
-
-# Local database & temp files
+build/
 *.db
-*.db-journal
-*.db-wal
-*.db-shm
-tempCodeRunnerFile.cpp
-
-# Secrets & local scripts
-backend/run.sh
-.env
-.env.*
+*.sqlite
+*.sqlite3
