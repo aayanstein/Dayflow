@@ -1,18 +1,24 @@
-FROM gcc:13-bookworm
+FROM ubuntu:22.04
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
     cmake \
-    make \
-    libcurl4-openssl-dev \
     libsqlite3-dev \
-    libssl-dev \
+    libasio-dev \
+    curl \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
+RUN curl -L https://github.com/CrowCpp/Crow/releases/download/v1.2.0/crow_all.h -o /usr/local/include/crow.h
+
 WORKDIR /app/backend
+
 COPY . .
 
 RUN cmake -B build && cmake --build build -j2
 
 EXPOSE 18080
+
 CMD ["./build/dayflow"]
