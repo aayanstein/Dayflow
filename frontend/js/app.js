@@ -50,7 +50,7 @@
   }
 })();
 
-const RENDER_API_BASE = "https://your-dayflow-backend.onrender.com";
+const RENDER_API_BASE = "https://dayflow-backend-1jta.onrender.com";
 
 const API_BASE = ["localhost", "127.0.0.1"].includes(window.location.hostname)
   ? "http://localhost:18080"
