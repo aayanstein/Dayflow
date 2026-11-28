@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     cmake \
     libsqlite3-dev \
     libasio-dev \
+    libcurl4-openssl-dev \
     curl \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
